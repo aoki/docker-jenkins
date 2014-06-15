@@ -15,7 +15,15 @@ RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenki
 RUN rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
 RUN yum install -y jenkins
 
+# Install ssh
+RUN yum install -y openssh-server openssh-clients
+
 RUN yum -y clean all
 
-EXPOSE 8080
-ENTRYPOINT java -jar /usr/lib/jenkins/jenkins.war
+# Change root password
+RUN echo "root:root" | chpasswd
+
+EXPOSE 22 8080
+ENTRYPOINT service sshd start && \
+    service jenkins start && \
+    /bin/bash
