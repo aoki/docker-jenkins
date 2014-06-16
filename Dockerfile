@@ -4,8 +4,17 @@ MAINTAINER Yoshiki Aoki <ringohub@gmail.com>
 
 ENV LANG en_US.UTF-8
 
+# Add EPEL repository
+RUN rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
+RUN rpm -ivh http://ftp.riken.jp/Linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
 RUN yum -y update
 RUN yum -y upgrade
+
+# Install supervisor
+RUN yum install -y supervisor.noarch
+RUN mkdir -p /var/log/supervisor
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Install java
 RUN yum install -y java-1.7.0-openjdk-devel.x86_64
@@ -17,13 +26,12 @@ RUN yum install -y jenkins
 
 # Install ssh
 RUN yum install -y openssh-server openssh-clients
-
-RUN yum -y clean all
+RUN mkdir -p /var/run/sshd
+RUN ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N ""
+RUN ssh-keygen -t dsa -b 1024 -f /etc/ssh/ssh_host_dsa_key -N ""
 
 # Change root password
 RUN echo "root:root" | chpasswd
 
 EXPOSE 22 8080
-ENTRYPOINT service sshd start && \
-    service jenkins start && \
-    /bin/bash
+ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
