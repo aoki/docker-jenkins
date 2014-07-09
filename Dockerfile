@@ -29,6 +29,8 @@ RUN yum install -y openssh-server openssh-clients && yum clean all
 RUN mkdir -p /var/run/sshd
 RUN ssh-keygen -t rsa -b 2048 -f /etc/ssh/ssh_host_rsa_key -N ""
 RUN ssh-keygen -t dsa -b 1024 -f /etc/ssh/ssh_host_dsa_key -N ""
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
 
 # Change root password
 RUN echo "root:root" | chpasswd
