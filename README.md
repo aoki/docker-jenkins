@@ -10,6 +10,10 @@ Please details and options see [jenkins:alpine](https://hub.docker.com/_/jenkins
 ## Run
 
 ```bash
+docker pull ringo/jenkins
+```
+
+```bash
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v /var/lib/jenkins:/var/jenkins_home \
@@ -20,4 +24,45 @@ docker run --rm \
 ## Build
 ```bash
 docker build -t ringo/jenkins .
+```
+
+## Execute docker inside container
+
+Share `/var/run/docker.sock` file between host and container.
+
+![Execute docker inside container](assets/docker-exec.gif)
+
+## Jenkins BlueOcean Plugin
+![Jenkins BlueOcean Plugin](assets/blueocean.gif)
+
+
+### Sample Jenkinsfile
+```groovy
+#!groovy
+
+pipeline {
+  agent {docker 'ringo/docker-sbt:0.13.15-protobuf'}
+  stages {
+    stage('lint') {
+      steps {
+        sh 'echo "Execute scalastyle check"'
+      }
+    }
+    stage('outdated') {
+      steps {
+        sh 'echo "Check library outdated"'
+      }
+    }
+    stage('test') {
+      steps {
+        sh 'echo "Run test and covarage"'
+      }
+    }
+    stage('release') {
+      steps {
+        sh 'echo "Release"'
+      }
+    }
+  }
+}
 ```

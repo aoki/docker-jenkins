@@ -20,5 +20,5 @@ login:
 
 # Display log
 log:
-	docker log -f jenkins
+	docker logs -f jenkins
 .PHONY: log
