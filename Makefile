@@ -1,7 +1,12 @@
 # Build Container
 build:
-	docker build -t aoki/jenkins .
+	docker build -t ringo/jenkins .
 .PHONY: build
+
+# Publish Container
+push:
+	docker login -u $${DOCKER_HUB_USER} -p $${DOCKER_HUB_PASSWORD} && docker push ringo/jenkins
+.PHONY: push
 
 # Run Container
 run:
