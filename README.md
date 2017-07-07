@@ -41,7 +41,7 @@ Share `/var/run/docker.sock` file between host and container.
 #!groovy
 
 pipeline {
-  agent {docker 'ringo/docker-sbt:0.13.15-protobuf'}
+  agent {docker 'ringo/sbt'}
   stages {
     stage('lint') {
       steps {
