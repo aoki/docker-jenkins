@@ -1,4 +1,5 @@
 # Alpine Jenkins Dokcer Container
+![stars](https://img.shields.io/docker/stars/ringo/jenkins.svg?colorA=30B8E9&colorB=FFD32E) ![pulls](https://img.shields.io/docker/pulls/ringo/jenkins.svg?colorA=30B8E9) ![automated build](https://img.shields.io/docker/automated/ringo/jenkins.svg?colorA=30B8E9) ![build status](https://img.shields.io/docker/build/ringo/jenkins.svg?colorA=30B8E9)
 
 - Alpine Linux based.
 - Jenkins with BlueOcean plugin.
