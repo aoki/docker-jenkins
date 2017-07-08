@@ -3,7 +3,7 @@
 
 - Alpine Linux based.
 - Jenkins with BlueOcean plugin.
-- Installed `dokcer` command.
+- Installed `dokcer` and `docker-compose` command.
 
 This image is created based on [jenkins:alpine](https://hub.docker.com/_/jenkins/).
 Please details and options see [jenkins:alpine](https://hub.docker.com/_/jenkins/).
